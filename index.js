@@ -1,19 +1,25 @@
-const quickSortRandomPivot = (arr) => {
-  if (arr.length <= 1) {
-    return arr;
-  }
-  const pivotIndex = Math.floor(Math.random() * arr.length);
-  const pivot = arr[pivotIndex];
-  const left = [];
-  const right = [];
-  for (let i = 0; i < arr.length; i++) {
-    if (i !== pivotIndex) {
-      if (arr[i] <= pivot) {
-        left.push(arr[i]);
+function trap(height) {
+  let totalWater = 0;
+  let left = 0;
+  let right = height.length - 1;
+  let maxLeft = 0;
+  let maxRight = 0;
+  while (left < right) {
+    if (height[left] < height[right]) {
+      if (height[left] >= maxLeft) {
+        maxLeft = height[left];
       } else {
-        right.push(arr[i]);
+        totalWater += maxLeft - height[left];
       }
+      left++;
+    } else {
+      if (height[right] >= maxRight) {
+        maxRight = height[right];
+      } else {
+        totalWater += maxRight - height[right];
+      }
+      right--;
     }
   }
-  return quickSortRandomPivot(left).concat(pivot, quickSortRandomPivot(right));
-};
+  return totalWater;
+}
